@@ -75,7 +75,7 @@ function showLocationsOnMap() {
     
     if (locations.length > 0) {
         const locationParam = encodeURIComponent(JSON.stringify(locations));
-        window.open(`/map?locations=${locationParam}`, '_blank');
+        window.location.href = `/map?locations=${locationParam}`;
     }
 }
 
