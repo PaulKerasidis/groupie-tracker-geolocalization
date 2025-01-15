@@ -1,4 +1,4 @@
-import {API_KEY} from '../../utils/config.js';
+import {API_KEY} from '../../utils/env.js';
 
 // Get locations from URL parameters
 const urlParams = new URLSearchParams(window.location.search);

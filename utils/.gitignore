@@ -1,0 +1,18 @@
+# Dependencies
+node_modules/
+
+# Environment files
+.env
+utils/config.js
+
+# IDE files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+
+# Build output
+dist/
+build/
+
