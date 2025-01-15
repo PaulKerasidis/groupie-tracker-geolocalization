@@ -1,4 +1,4 @@
-import {API_KEY} from '../../utils/env.js';
+import {API_KEY} from '../../utils/.env';
 
 // Get locations from URL parameters
 const urlParams = new URLSearchParams(window.location.search);
@@ -8,14 +8,14 @@ const cities = locationsParam ? JSON.parse(decodeURIComponent(locationsParam)) :
 // Initialize map
 const map = new maplibregl.Map({
     container: 'map',
-    style: `https://api.maptiler.com/maps/streets/style.json?key=${key}`,
+    style: `https://api.maptiler.com/maps/streets/style.json?key=${API_KEY}`,
     center: [0, 0],
     zoom: 2
 });
 
 // Function to get coordinates for a city
 async function getCityCoordinates(cityName) {
-    const url = `https://api.maptiler.com/geocoding/${encodeURIComponent(cityName)}.json?key=${key}`;
+    const url = `https://api.maptiler.com/geocoding/${encodeURIComponent(cityName)}.json?key=${API_KEY}`;
     const response = await fetch(url);
     const data = await response.json();
     

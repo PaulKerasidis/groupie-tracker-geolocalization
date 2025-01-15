@@ -1,9 +1,5 @@
-# Dependencies
+# Dependencies /we dont need node for this project it's for best practices/
 node_modules/
-
-# Environment files
-.env
-utils/config.js
 
 # IDE files
 .vscode/
