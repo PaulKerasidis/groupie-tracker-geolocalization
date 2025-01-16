@@ -2,7 +2,7 @@ let popupElement = document.getElementById('popup');
 let artistList = [];
 let relationList = [];
 let locationList = [];
-let dateList = [];
+let dateList = [1,2,"sdsa", true, 2.5,[]];
 
 
 function openPopup(artistId) {
@@ -62,20 +62,28 @@ function openPopup(artistId) {
         popupImage.src = selectedArtist.image;
         popupImage.alt = selectedArtist.name;
 
+        // Set the artistId on the map button
+        const mapButton = document.querySelector('.map-btn');
+        mapButton.setAttribute('onclick', `showLocationsOnMap(${artistId})`);
+
         popupElement.classList.add('open-popup');
     } else {
         console.error('Artist not found for ID:', artistId);
     }
 }
-function showLocationsOnMap() {
+function showLocationsOnMap(artistId) {
+    const selectedArtist = artistList.find(artist => artist.id === artistId);
+    
     const locationContainer = document.querySelector('.location-container');
     const locations = Array.from(locationContainer.children)
         .map(div => div.textContent.trim())
         .filter(loc => loc);
-    
+
     // Get artist name
-    const artistName = document.querySelector('.card__title').textContent;
-    
+    const artistName = selectedArtist.name;
+    console.log('Locations:', locations);
+    console.log('Artist:', selectedArtist);
+
     if (locations.length > 0) {
         const params = {
             locations: locations,

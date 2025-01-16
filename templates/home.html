@@ -28,29 +28,7 @@
 </header>
 <body>
     <!-- Pop Up Div -->
-    <div class="popup" id="popup">
-        <img src="" alt="" class="popup-image">
-        
-        <div class="popup-content">
-            <div class="info">
-                <h1 style="padding: 15px;">Concerts Locations</h1>
-                <p class="location-container"></p>
-                <button type="button" class="map-btn" onclick="showLocationsOnMap()">
-                    <i class="fas fa-map-marker-alt"></i>
-                    Show on Map
-                </button>
-            </div>
-            <div class="info">
-                <h1 style="padding: 15px;">Concerts Dates</h1>
-                <p class="date-container"></p>
-            </div>
-            <div class="info">
-                <h1 style="padding: 15px;">Concerts</h1>
-                <p class="location-grid"></p>
-            </div>
-        </div>
-        <button type="button" onclick="closePopup()">Close</button>
-    </div>
+   
     <!-- End of Pop Up Div -->
     <div class="search">
         <div class="search-box">
@@ -96,6 +74,29 @@
                         <b style="color: #131313;">First Album:</b> {{.FirstAlbum}}
                         </p>
                     </div>
+            </div>
+            <div class="popup" id="popup">
+                <img src="" alt="" class="popup-image">
+                
+                <div class="popup-content">
+                    <div class="info">
+                        <h1 style="padding: 15px;">Concerts Locations</h1>
+                        <p class="location-container"></p>
+                        <button type="button" class="map-btn">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Show on Map
+                        </button>
+                    </div>
+                    <div class="info">
+                        <h1 style="padding: 15px;">Concerts Dates</h1>
+                        <p class="date-container"></p>
+                    </div>
+                    <div class="info">
+                        <h1 style="padding: 15px;">Concerts</h1>
+                        <p class="location-grid"></p>
+                    </div>
+                </div>
+                <button type="button" onclick="closePopup()">Close</button>
             </div>
             {{end}}
         </div>

@@ -81,3 +81,8 @@ map.addControl(new maplibregl.NavigationControl());
 // Display cities from URL parameters
 displayCities(cities);
 
+function titleofthepage(){
+    document.getElementById("title").innerHTML = "The journey of " + artist ;
+}
+
+titleofthepage();
