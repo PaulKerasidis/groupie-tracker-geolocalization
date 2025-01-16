@@ -71,11 +71,18 @@ function showLocationsOnMap() {
     const locationContainer = document.querySelector('.location-container');
     const locations = Array.from(locationContainer.children)
         .map(div => div.textContent.trim())
-        .filter(loc => loc); // Remove empty locations
+        .filter(loc => loc);
+    
+    // Get artist name
+    const artistName = document.querySelector('.card__title').textContent;
     
     if (locations.length > 0) {
-        const locationParam = encodeURIComponent(JSON.stringify(locations));
-        window.location.href = `/map?locations=${locationParam}`;
+        const params = {
+            locations: locations,
+            artist: artistName
+        };
+        const queryString = encodeURIComponent(JSON.stringify(params));
+        window.location.href = `/map?data=${queryString}`;
     }
 }
 
