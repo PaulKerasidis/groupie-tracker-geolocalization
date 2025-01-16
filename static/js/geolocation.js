@@ -27,22 +27,103 @@ async function getCityCoordinates(cityName) {
 
 // Function to add marker for a city
 function addCityMarker(coordinates, cityName) {
-    new maplibregl.Marker({color: "#FF0000"})
-        .setLngLat(coordinates)
-        .setPopup(new maplibregl.Popup().setHTML(`<h3>${cityName}</h3>`))
-        .addTo(map);
+    new maplibregl.Marker({
+        color: "#FF0000",
+        draggable: true
+    })
+    .setLngLat(coordinates)
+    .setPopup(new maplibregl.Popup()
+        .setHTML(`
+            <h3>${cityName}</h3>
+            <p>Coordinates: ${coordinates[0].toFixed(4)}, ${coordinates[1].toFixed(4)}</p>
+        `))
+    .addTo(map);
 }
 
-// Display cities from URL parameters
+// Function to calculate bounds for multiple points
+function calculateBounds(coordinates) {
+    if (!coordinates || coordinates.length === 0) return null;
+
+    const bounds = new maplibregl.LngLatBounds();
+    coordinates.forEach(coord => {
+        bounds.extend(coord);
+    });
+    return bounds;
+}
+
+// Function to display all cities on the map
 async function displayCities(cities) {
+    const coordinates = [];
+    
     for (const city of cities) {
         const coords = await getCityCoordinates(city);
         if (coords) {
+            coordinates.push(coords);
             addCityMarker(coords, city);
+        }
+    }
+
+    if (coordinates.length > 0) {
+        const bounds = calculateBounds(coordinates);
+        if (bounds) {
+            map.fitBounds(bounds, {
+                padding: 50,
+                maxZoom: 15
+            });
         }
     }
 }
 
-// Initialize map with locations
+// Function to get user location
+function getUserLocation() {
+    if (!navigator.geolocation) {
+        console.error('Geolocation is not supported');
+        return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+        (position) => {
+            const userCoords = [position.coords.longitude, position.coords.latitude];
+            addCityMarker(userCoords, 'Your Location');
+            map.flyTo({
+                center: userCoords,
+                zoom: 12
+            });
+        },
+        (error) => {
+            console.error('Error getting location:', error.message);
+        }
+    );
+}
+
+// Add map controls
+map.addControl(new maplibregl.NavigationControl()); // Navigation
+map.addControl(new maplibregl.FullscreenControl()); // Fullscreen
+map.addControl(new maplibregl.ScaleControl()); // Scale
+
+// Add user location control
+map.addControl(new maplibregl.GeolocateControl({
+    positionOptions: {
+        enableHighAccuracy: true
+    },
+    trackUserLocation: true,
+    showUserHeading: true
+}));
+
+// Add click event listener
+map.on('click', (e) => {
+    console.log(`Clicked at: ${e.lngLat.lng}, ${e.lngLat.lat}`);
+});
+
+// Display cities from URL parameters
 displayCities(cities);
-map.addControl(new maplibregl.NavigationControl());
+
+// Add map load event
+map.on('load', () => {
+    console.log('Map loaded successfully');
+});
+
+// Add error handling
+map.on('error', (e) => {
+    console.error('Map error:', e.error);
+});
