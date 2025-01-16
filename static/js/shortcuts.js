@@ -1,6 +1,9 @@
 const cards = document.querySelectorAll('.card');
+
+
 let id = 0;
 let selectedCardIndex = 0;
+let selectedSugIndex = 0;
 
 document.addEventListener('keydown', (event) => {
     if (event.key === 'ArrowRight') {
@@ -19,6 +22,22 @@ document.addEventListener('keydown', (event) => {
     });
 });
 
+document.addEventListener('keydown', (event) => {
+    const sugs = document.querySelectorAll('.suggestion-item');
+    console.log(sugs);
+    if (event.key === 'ArrowDown') {
+        selectedSugIndex = (selectedSugIndex + 1) % sugs.length;
+    } else if (event.key === 'ArrowUp') {
+        selectedSugIndex = (selectedSugIndex - 1 + sugs.length) % sugs.length;
+    }
+    if (event === 'Enter') {
+        
+        console.log('Enter');
+    }
+    sugs.forEach((sug, index) => {
+        sug.classList.toggle('suggestion-item:hover', index === selectedSugIndex);
+    });
+});
 document.addEventListener('keydown', (event) => {
     if (event.key === 'Enter' && event.shiftKey && cards[selectedCardIndex]) {
         idStr = cards[selectedCardIndex].getAttribute('onclick');

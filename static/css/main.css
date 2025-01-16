@@ -189,6 +189,10 @@ h1{
     transition: background-color 0.3s;
 }
 
+.suggestion-item:hover {
+    background-color: #ef1818;
+}
+
 /* From Uiverse.io by Li-Deheng */ 
 .search {
     --input-line: #cccccc;
@@ -358,4 +362,26 @@ h1{
 
 .popup .info button.map-btn:hover i {
   transform: scale(1.1);
+}
+
+a.button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: var(--color-primary);
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+a.button:hover {
+  background-color: var(--color-gray-800);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+a.button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
