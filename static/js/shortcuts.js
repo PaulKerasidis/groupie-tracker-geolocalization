@@ -1,14 +1,11 @@
 const cards = document.querySelectorAll('.card');
-
-
-let id = 0;
 let selectedCardIndex = 0;
-let selectedSugIndex = 0;
+let selectedSugIndex = -1;
 
 document.addEventListener('keydown', (event) => {
     if (event.key === 'ArrowRight') {
         selectedCardIndex = (selectedCardIndex + 1) % cards.length;
-    } else if (event.key === 'ArrowLeft' ) {
+    } else if (event.key === 'ArrowLeft') {
         selectedCardIndex = (selectedCardIndex - 1 + cards.length) % cards.length;
     }
     cards.forEach((card, index) => {
@@ -22,31 +19,43 @@ document.addEventListener('keydown', (event) => {
     });
 });
 
+// Shortcuts for suggestions
 document.addEventListener('keydown', (event) => {
-    const sugs = document.querySelectorAll('.suggestion-item');
-    console.log(sugs);
+    const suggestions = document.querySelectorAll('.suggestion-item');
+    if (suggestions.length === 0) return;
+
     if (event.key === 'ArrowDown') {
-        selectedSugIndex = (selectedSugIndex + 1) % sugs.length;
+        selectedSugIndex = (selectedSugIndex + 1) % suggestions.length;
     } else if (event.key === 'ArrowUp') {
-        selectedSugIndex = (selectedSugIndex - 1 + sugs.length) % sugs.length;
+        selectedSugIndex = (selectedSugIndex - 1 + suggestions.length) % suggestions.length;
     }
-    if (event === 'Enter') {
-        
-        console.log('Enter');
-    }
-    sugs.forEach((sug, index) => {
-        sug.classList.toggle('suggestion-item:hover', index === selectedSugIndex);
+
+    suggestions.forEach((suggestion, index) => {
+        suggestion.classList.toggle('selected', index === selectedSugIndex);
     });
-});
-document.addEventListener('keydown', (event) => {
-    if (event.key === 'Enter' && event.shiftKey && cards[selectedCardIndex]) {
-        idStr = cards[selectedCardIndex].getAttribute('onclick');
-        id = idStr.match(/(\d+)/)[0];
-        const artistID = id;
-        openPopup(Number(artistID));
-    }   
+
+    // Scroll the selected suggestion into view
+    if (selectedSugIndex >= 0) {
+        suggestions[selectedSugIndex].scrollIntoView({
+            behavior: 'smooth',
+            block: 'nearest'
+        });
+    }
 });
 
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' && event.shiftKey && cards[selectedCardIndex]) {
+        const idStr = cards[selectedCardIndex].getAttribute('onclick');
+        const id = idStr.match(/(\d+)/)[0];
+        const artistID = id;
+        openPopup(Number(artistID));
+    } else if (event.key === 'Enter' && selectedSugIndex >= 0) {
+        const suggestions = document.querySelectorAll('.suggestion-item');
+        if (suggestions[selectedSugIndex]) {
+            suggestions[selectedSugIndex].click();
+        }
+    }
+});
 
 document.addEventListener('keydown', (event) => {
     if (event.ctrlKey && event.key === 'f') {
@@ -56,4 +65,3 @@ document.addEventListener('keydown', (event) => {
         closePopup();
     }
 });
-

@@ -189,8 +189,9 @@ h1{
     transition: background-color 0.3s;
 }
 
-.suggestion-item:hover {
-    background-color: #ef1818;
+.suggestion-item.selected {
+  background-color: #ef1818; /* Highlight color */
+  color: white; /* Text color for better contrast */
 }
 
 /* From Uiverse.io by Li-Deheng */ 
