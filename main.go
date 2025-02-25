@@ -56,7 +56,7 @@ func main() {
 
 	http.HandleFunc("/search", handlers.SearchHandler)
 
-	http.HandleFunc("/map", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("GET /map", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "templates/map.html")
 	})
 
