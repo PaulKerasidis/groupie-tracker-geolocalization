@@ -56,8 +56,14 @@ func main() {
 
 	http.HandleFunc("/search", handlers.SearchHandler)
 
-	http.HandleFunc("GET /map", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "templates/map.html")
+	http.HandleFunc("/map", func(w http.ResponseWriter, r *http.Request) {
+		// Check if it's a GET request
+		if r.Method == http.MethodGet {
+			http.ServeFile(w, r, "templates/map.html")
+		} else {
+			// Return 405 Method Not Allowed for non-GET requests
+			http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		}
 	})
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
